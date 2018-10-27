@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\MessageBag;
 use App\Post;
 
 class PostsController extends Controller
@@ -26,7 +28,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog_posts.create');
     }
 
     /**
@@ -37,7 +39,19 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validating post
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        //The post data is valid - now save post using Tinker
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->save();
+
+        return redirect('/posts')->with('success', 'Post created successfully!');
     }
 
     /**
@@ -60,7 +74,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $current_post = Post::find($id);
+        return view('blog_posts.edit')->with('post', $current_post);
     }
 
     /**
@@ -72,7 +87,19 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //validating post
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        //The post data is valid - now save post using Tinker
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->save();
+
+        return redirect('/posts/'. $post->id)->with('success', 'Post updated successfully!');
     }
 
     /**
@@ -83,6 +110,9 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $current_post = Post::find($id);
+        $current_post->delete();
+
+        return redirect('/posts')->with('success', 'Post deleted successfully!');
     }
 }

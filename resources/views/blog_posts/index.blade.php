@@ -5,11 +5,11 @@
     @if (count($posts) > 0)
         @foreach ($posts as $post)
             <div class="well">
-                <a href="/posts/{{$post->id}}"><h3>{{$post->title}}</h3></a>
-                <small>Created at {{$post->created_at}}</small>
+                <a href="/posts/{{ $post->id }}"><h3>{{ $post->title }}</h3></a>
+                <small>Created at {{ $post->created_at }}</small>
             </div>
         @endforeach
-        {{$posts->links()}}
+        {{ $posts->links() }}
     @else
         <p>No Posts Found!</p>
     @endif
