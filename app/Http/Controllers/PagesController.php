@@ -8,17 +8,24 @@ class PagesController extends Controller
 {
     public function index()
     {
-        return view("pages.index");
+        $title = "Welcome to Laravel Blood!";
+        return view("pages.index")->with("index_title", $title);
     }
 
     public function about()
     {
-        return view("pages.about");
+        $title = "About Us";
+        return view("pages.about")->with("about_title", $title);
     }
 
     public function services()
     {
-        return view("pages.services");
+        $data = array(
+            "title" => "Services we provide",
+            "info" => "We are a good software developer company",
+            "services" => ["Java", "PHP", "Android", "Nothing"]
+        );
+        return view("pages.services")->with($data);
     }
 
 }
